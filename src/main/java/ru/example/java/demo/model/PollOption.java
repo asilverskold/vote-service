@@ -1,5 +1,7 @@
 package ru.example.java.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,7 +32,11 @@ public class PollOption {
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, name = "poll_id")
+    @JsonIgnore
     private Poll poll;
 
+    @Column(name = "voted_count")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Integer votedCount = 0;
 
 }

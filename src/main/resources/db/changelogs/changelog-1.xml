@@ -29,6 +29,7 @@
                 id          number generated always as identity ( start with 1 increment by 1 ) primary key,
                 title       varchar(512),
                 poll_id     number,
+                voted_count number default 0,
                 constraint fk_poll_option_poll_id foreign key (poll_id) references POLL (id)
             );
         </sql>
