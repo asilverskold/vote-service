@@ -12,6 +12,8 @@ import ru.example.java.demo.repository.PollRepository;
 import ru.example.java.demo.repository.UserRepository;
 import ru.example.java.demo.repository.VoteRepository;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Collection;
 
 @Service
@@ -51,23 +53,48 @@ public class PollService {
 
     @Transactional
     public void vote(VoteRequest voteRequest) {
+
+
+
         Long pollId = voteRequest.getPollid();
         Long optionId = voteRequest.getOptionId();
         Long userId = voteRequest.getUserId();
 
-        if (voteRepository.alreadyVoted(pollId, userId, optionId)) {
-            throw new RuntimeException("Already voted");
+
+        if( LocalDateTime.now()
+                .isBefore(LocalDateTime.of(pollRepository.getById(pollId).getDate(),
+                        LocalTime.of(11,0)))
+        ){
+            throw new RuntimeException("Voting is over");
         }
 
-        PollOption pollOption = pollOptionRepository.getById(optionId);
-        pollOption.setVotedCount(pollOption.getVotedCount() + 1);
-        pollOptionRepository.save(pollOption);
 
-        Vote vote = new Vote();
-        vote.setPoll(pollRepository.getById(pollId));
-        vote.setPollOption(pollOption);
-        vote.setUser(userRepository.getById(userId));
-        voteRepository.save(vote);
+        Vote vote = voteRepository.alreadyVoted(pollId, userId).orElse(new Vote());
+
+        if (vote.getId() != null) {
+
+            if(vote.getPollOption().getId().equals(optionId)){
+                throw new RuntimeException("Already voted");
+            }
+
+            PollOption pollOption = pollOptionRepository.getById(vote.getPollOption().getId());
+            pollOption.setVotedCount(pollOption.getVotedCount() - 1);
+            pollOptionRepository.save(pollOption);
+        }
+
+
+            PollOption pollOption = pollOptionRepository.getById(optionId);
+            pollOption.setVotedCount(pollOption.getVotedCount() + 1);
+            pollOptionRepository.save(pollOption);
+
+
+            vote.setPoll(pollRepository.getById(pollId));
+            vote.setPollOption(pollOption);
+            vote.setUser(userRepository.getById(userId));
+            voteRepository.save(vote);
 
     }
+
+
+
 }

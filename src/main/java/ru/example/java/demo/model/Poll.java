@@ -1,6 +1,5 @@
 package ru.example.java.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -26,6 +26,9 @@ public class Poll {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "date", nullable = false)
+    private LocalDate date = LocalDate.now();
 
     @Column(name = "title", nullable = false)
     private String title;

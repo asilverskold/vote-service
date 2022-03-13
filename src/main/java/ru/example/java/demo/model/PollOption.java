@@ -39,4 +39,8 @@ public class PollOption {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Integer votedCount = 0;
 
+
+
+
+
 }
