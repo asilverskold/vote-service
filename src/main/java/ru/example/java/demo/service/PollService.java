@@ -35,6 +35,13 @@ public class PollService {
         return pollRepository.save(poll);
     }
 
+    @Transactional
+    public void deletePoll(Long pollId) {
+        pollRepository.deleteById(pollId);
+    }
+
+
+
     public Poll findPollById(Long pollId) {
         return pollRepository.findById(pollId)
                 .orElse(null);
@@ -60,13 +67,15 @@ public class PollService {
         Long optionId = voteRequest.getOptionId();
         Long userId = voteRequest.getUserId();
 
+/*
 
         if( LocalDateTime.now()
-                .isBefore(LocalDateTime.of(pollRepository.getById(pollId).getDate(),
+                .isAfter(LocalDateTime.of(pollRepository.getById(pollId).getDate(),
                         LocalTime.of(11,0)))
         ){
             throw new RuntimeException("Voting is over");
         }
+*/
 
 
         Vote vote = voteRepository.alreadyVoted(pollId, userId).orElse(new Vote());

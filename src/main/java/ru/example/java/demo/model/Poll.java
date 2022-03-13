@@ -1,5 +1,6 @@
 package ru.example.java.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,6 +33,10 @@ public class Poll {
 
     @Column(name = "title", nullable = false)
     private String title;
+
+    @OneToMany(mappedBy = "poll", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Vote> votes;
 
     @OneToMany(mappedBy = "poll", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

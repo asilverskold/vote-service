@@ -1,12 +1,7 @@
 package ru.example.java.demo.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.example.java.demo.dto.VoteRequest;
 import ru.example.java.demo.model.Poll;
 import ru.example.java.demo.model.PollOption;
@@ -28,6 +23,11 @@ public class PollController {
     @PutMapping("/polls")
     public Poll update(@RequestBody Poll poll) {
         return pollService.updatePoll(poll);
+    }
+
+    @DeleteMapping("/polls")
+    public void delete(@RequestParam Long pollId) {
+       pollService.deletePoll(pollId);
     }
 
     @GetMapping("/polls/{id}")
