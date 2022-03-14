@@ -9,14 +9,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
-import ru.example.java.demo.repository.UserRepository;
 
 import javax.sql.DataSource;
 
@@ -31,12 +26,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                .authorizeRequests().anyRequest().authenticated()
+                .authorizeRequests()
+                .antMatchers("/", "/registration","/auth").permitAll()
+               // .anyRequest().authenticated()
                 .and().httpBasic()
                 .and().sessionManagement().disable();
-    }
 
 
+        }
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -52,8 +49,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-    @Bean
+   /* @Bean
     public AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
-    }
+    }*/
 }

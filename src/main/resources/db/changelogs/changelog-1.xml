@@ -8,17 +8,17 @@
         <sql>
             CREATE TABLE USER
             (
-                id           number generated always as identity ( start with 1 increment by 1 ) primary key,
-                username     varchar(512),
-                password     varchar(512),
-                active       bit DEFAULT 1  NOT NULL
+                id       number generated always as identity ( start with 1 increment by 1 ) primary key,
+                username varchar(512),
+                password varchar(512),
+                active   bit
 
             );
         </sql>
         <sql>
             CREATE TABLE USER_ROLE
             (
-                user_id number not null,
+                user_id number,
                 role    varchar(512),
                 constraint fk_user_roles_user_id foreign key (user_id) references USER (id) on delete cascade
             );
@@ -30,9 +30,9 @@
         <sql>
             CREATE TABLE POLL
             (
-                id          number generated always as identity ( start with 1 increment by 1 ) primary key,
-                date        timestamp not null,
-                title       varchar(512)
+                id    number generated always as identity ( start with 1 increment by 1 ) primary key,
+                date  timestamp not null,
+                title varchar(512)
             );
         </sql>
         <sql>
@@ -48,15 +48,29 @@
         <sql>
             CREATE TABLE VOTE
             (
-                id          number generated always as identity ( start with 1 increment by 1 ) primary key,
-                poll_id     number,
-                user_id     number,
-                poll_option_id     number,
+                id             number generated always as identity ( start with 1 increment by 1 ) primary key,
+                poll_id        number,
+                user_id        number,
+                poll_option_id number,
                 constraint fk_vote_poll_id foreign key (poll_id) references POLL (id),
                 constraint fk_vote_poll_option_id foreign key (poll_option_id) references POLL_OPTION (id),
                 constraint fk_vote_user_id foreign key (user_id) references USER (id)
             );
         </sql>
+    </changeSet>
+
+    <changeSet author="vasily" id="changeset3">
+        <sql>
+            INSERT INTO USER(id,username,password,active)
+            VALUES (1,'admin', 'admin',1)
+
+        </sql>
+        <sql>
+            INSERT INTO USER_ROLE(user_id,role)
+            VALUES (1, 'ADMIN')
+
+        </sql>
+
     </changeSet>
 
 </databaseChangeLog>
