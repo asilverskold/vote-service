@@ -11,43 +11,43 @@ import java.util.Collection;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/polls")
+@RequestMapping("/api/v1")
 public class PollController {
 
     private final PollService pollService;
 
-    @PostMapping()
+    @PostMapping("/polls")
     public Poll create(@RequestBody Poll poll) {
         return pollService.createPoll(poll);
     }
 
-    @PutMapping()
+    @PutMapping("/polls")
     public Poll update(@RequestBody Poll poll) {
         return pollService.updatePoll(poll);
     }
 
-    @DeleteMapping()
+    @DeleteMapping("/polls")
     public void delete(@RequestParam Long pollId) {
        pollService.deletePoll(pollId);
     }
 
-    @GetMapping()
+    @GetMapping("/polls")
     public Collection<Poll> findAll() {
         return pollService.findAllPolls();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/polls/{id}")
     public Poll findById(@PathVariable Long id) {
         return pollService.findPollById(id);
     }
 
 
-    @PostMapping("/{pollid}/options")
+    @PostMapping("/polls/{pollid}/options")
     public void addPollOption(@PathVariable Long pollid, @RequestBody PollOption option) {
         pollService.addOptionToPoll(pollid, option);
     }
 
-    @PostMapping("/{pollid}/vote")
+    @PostMapping("/polls/{pollid}/vote")
     public void addPollOption(@PathVariable Long pollid, @RequestBody VoteRequest voteRequest) {
         voteRequest.setPollid(pollid);
         pollService.vote(voteRequest);
