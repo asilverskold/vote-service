@@ -67,7 +67,7 @@ public class PollService {
         Long optionId = voteRequest.getOptionId();
         Long userId = voteRequest.getUserId();
 
-/*
+
 
         if( LocalDateTime.now()
                 .isAfter(LocalDateTime.of(pollRepository.getById(pollId).getDate(),
@@ -75,7 +75,7 @@ public class PollService {
         ){
             throw new RuntimeException("Voting is over");
         }
-*/
+
 
 
         Vote vote = voteRepository.alreadyVoted(pollId, userId).orElse(new Vote());

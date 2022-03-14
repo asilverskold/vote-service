@@ -13,6 +13,15 @@
                 password     varchar(512)
             );
         </sql>
+        <sql>
+            CREATE TABLE USER_ROLE
+            (
+                user_id number not null,
+                role    varchar(512),
+                constraint fk_user_roles_user_id foreign key (user_id) references USER (id) on delete cascade
+            );
+        </sql>
+
     </changeSet>
 
     <changeSet author="vasily" id="changeset2">

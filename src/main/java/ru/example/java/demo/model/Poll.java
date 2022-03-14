@@ -35,10 +35,6 @@ public class Poll {
     private String title;
 
     @OneToMany(mappedBy = "poll", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<Vote> votes;
-
-    @OneToMany(mappedBy = "poll", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<PollOption> pollOptions;
 }
