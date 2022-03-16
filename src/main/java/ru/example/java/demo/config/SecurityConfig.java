@@ -25,11 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/registration","/auth").permitAll()
                 .anyRequest().authenticated()
                 .and().httpBasic()
                 .and().sessionManagement().disable();
-
 
         }
     @Bean
@@ -47,8 +45,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-   /* @Bean
-    public AuthenticationManager authenticationManager() throws Exception {
-        return super.authenticationManager();
-    }*/
+
 }
