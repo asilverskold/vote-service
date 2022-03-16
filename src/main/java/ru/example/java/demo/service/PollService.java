@@ -40,8 +40,6 @@ public class PollService {
         pollRepository.deleteById(pollId);
     }
 
-
-
     public Poll findPollById(Long pollId) {
         return pollRepository.findById(pollId)
                 .orElse(null);
@@ -60,25 +58,13 @@ public class PollService {
 
     @Transactional
     public void vote(VoteRequest voteRequest) {
-
-
-
         Long pollId = voteRequest.getPollid();
         Long optionId = voteRequest.getOptionId();
         Long userId = voteRequest.getUserId();
 
+        validateVoting(pollId);
 
-
-        if( LocalDateTime.now()
-                .isAfter(LocalDateTime.of(pollRepository.getById(pollId).getDate(),
-                        LocalTime.of(11,0)))
-        ){
-            throw new RuntimeException("Voting is over");
-        }
-
-
-
-        Vote vote = voteRepository.alreadyVoted(pollId, userId).orElse(new Vote());
+        Vote vote = voteRepository.findByVote(pollId, userId).orElse(new Vote());
 
         if (vote.getId() != null) {
 
@@ -96,7 +82,6 @@ public class PollService {
             pollOption.setVotedCount(pollOption.getVotedCount() + 1);
             pollOptionRepository.save(pollOption);
 
-
             vote.setPoll(pollRepository.getById(pollId));
             vote.setPollOption(pollOption);
             vote.setUser(userRepository.getById(userId));
@@ -104,6 +89,14 @@ public class PollService {
 
     }
 
+    private void validateVoting(Long pollId) {
+
+        if( LocalDateTime.now()
+                .isAfter(LocalDateTime.of(pollRepository.getById(pollId).getDate(), LocalTime.of(11,0)))
+        ){
+            throw new RuntimeException("Voting is over");
+        }
+    }
 
 
 }

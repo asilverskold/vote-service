@@ -7,6 +7,7 @@ import ru.example.java.demo.model.Poll;
 import ru.example.java.demo.model.PollOption;
 import ru.example.java.demo.service.PollService;
 
+import javax.validation.Valid;
 import java.util.Collection;
 
 @RestController
@@ -48,7 +49,7 @@ public class PollController {
     }
 
     @PostMapping("/polls/{pollid}/vote")
-    public void addPollOption(@PathVariable Long pollid, @RequestBody VoteRequest voteRequest) {
+    public void addPollOption(@PathVariable Long pollid, @Valid @RequestBody VoteRequest voteRequest) {
         voteRequest.setPollid(pollid);
         pollService.vote(voteRequest);
     }
