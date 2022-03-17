@@ -1,9 +1,9 @@
-package ru.example.java.demo.repository;
+package ru.example.java.demo.repository.poll;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import ru.example.java.demo.model.Vote;
+import ru.example.java.demo.model.poll.Vote;
 
 import java.util.Optional;
 

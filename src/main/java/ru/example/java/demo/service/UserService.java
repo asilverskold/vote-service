@@ -2,7 +2,7 @@ package ru.example.java.demo.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.example.java.demo.model.User;
+import ru.example.java.demo.model.user.User;
 import ru.example.java.demo.repository.UserRepository;
 
 @Service

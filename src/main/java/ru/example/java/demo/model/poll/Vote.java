@@ -1,8 +1,9 @@
-package ru.example.java.demo.model;
+package ru.example.java.demo.model.poll;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.example.java.demo.model.user.User;
 
 import javax.persistence.*;
 

@@ -1,6 +1,5 @@
-package ru.example.java.demo.model;
+package ru.example.java.demo.model.poll;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

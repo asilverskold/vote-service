@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+
+    <changeSet author="vasily" id="changeset4">
+        <sql>
+            CREATE TABLE RESTAURANT
+            (
+                id   NUMBER GENERATED ALWAYS AS IDENTITY ( START WITH 1 INCREMENT BY 1 ) PRIMARY KEY NOT NULL,
+                name VARCHAR(255)                                                                    NOT NULL,
+                menu NUMBER,
+                CONSTRAINT pk_restaurant PRIMARY KEY (id)
+            );
+
+        </sql>
+        <sql>
+            CREATE TABLE MENU
+            (
+                id            NUMBER GENERATED ALWAYS AS IDENTITY ( START WITH 1 INCREMENT BY 1 ) PRIMARY KEY NOT NULL,
+                restaurant_id NUMBER                                                                          NOT NULL,
+                CONSTRAINT FK_MENU_ON_RESTAURANT FOREIGN KEY (restaurant_id) REFERENCES RESTAURANT (id)
+            );
+
+            ALTER TABLE RESTAURANT
+                ADD CONSTRAINT FK_RESTAURANT_ON_MENU FOREIGN KEY (menu) REFERENCES MENU (id);
+        </sql>
+        <sql>
+            CREATE TABLE DISH
+            (
+                id      NUMBER GENERATED ALWAYS AS IDENTITY ( START WITH 1 INCREMENT BY 1 ) PRIMARY KEY NOT NULL,
+                menu_id NUMBER                                                                          NOT NULL,
+                restaurant_id NUMBER ,
+                CONSTRAINT FK_DISH_ON_MENU FOREIGN KEY (menu_id) REFERENCES MENU (id)
+                CONSTRAINT FK_DISH_ON_RESTAURANT FOREIGN KEY (restaurant_id) REFERENCES RESTAURANT (id);
+            );
+        </sql>
+    </changeSet>
+
+
+</databaseChangeLog>

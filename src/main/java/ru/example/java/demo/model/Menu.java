@@ -9,32 +9,27 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.List;
 
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "poll_option")
-public class PollOption {
-
+@Table(name = "menu")
+public class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "title", nullable = false)
-    private String title;
-
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false, name = "poll_id")
+    @JoinColumn(nullable = false, name = "restaurant_id")
     @JsonIgnore
-    private Poll poll;
+    private Restaurant restaurant;
 
-    @Column(name = "voted_count")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "menu", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Integer votedCount = 0;
+    @Column(name = "dish")
+    private List<Dish> dishs = new java.util.ArrayList<>();
 
-    @OneToMany(mappedBy = "poll", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<Vote> votes;
 
 
 

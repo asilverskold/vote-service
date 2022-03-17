@@ -3,8 +3,8 @@ package ru.example.java.demo.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.example.java.demo.dto.VoteRequest;
-import ru.example.java.demo.model.Poll;
-import ru.example.java.demo.model.PollOption;
+import ru.example.java.demo.model.poll.Poll;
+import ru.example.java.demo.model.poll.PollOption;
 import ru.example.java.demo.service.PollService;
 
 import javax.validation.Valid;
@@ -12,7 +12,7 @@ import java.util.Collection;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/api")
 public class PollController {
 
     private final PollService pollService;
