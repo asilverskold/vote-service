@@ -17,12 +17,18 @@ public class Dish {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "menu_id",nullable = false)
-    private Menu menu;
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Column(name = "price")
+    private Long price;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "restaurant_id")
+    @JoinColumn(name = "menu_id")
+    private Menu menu;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
 
 

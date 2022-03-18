@@ -28,7 +28,9 @@ public class Menu {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "menu", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "dish")
-    private List<Dish> dishs = new java.util.ArrayList<>();
+    private List<Dish> dishs;
+
+
 
 
 

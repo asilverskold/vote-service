@@ -57,6 +57,11 @@ public class PollService {
     }
 
     @Transactional
+    public void deleteOptionToPoll(Long pollOptionId) {
+        pollOptionRepository.deleteById(pollOptionId);
+    }
+
+    @Transactional
     public void vote(VoteRequest voteRequest) {
         Long pollId = voteRequest.getPollid();
         Long optionId = voteRequest.getOptionId();
@@ -64,36 +69,38 @@ public class PollService {
 
         validateVoting(pollId);
 
-        Vote vote = voteRepository.findByVote(pollId, userId).orElse(new Vote());
+        Vote vote = voteRepository.findByVote(pollId, userId)
+                .orElse(new Vote());
 
         if (vote.getId() != null) {
 
-            if(vote.getPollOption().getId().equals(optionId)){
+            if (vote.getPollOption()
+                    .getId()
+                    .equals(optionId)) {
                 throw new RuntimeException("Already voted");
             }
 
-            PollOption pollOption = pollOptionRepository.getById(vote.getPollOption().getId());
+            PollOption pollOption = pollOptionRepository.getById(vote.getPollOption()
+                                                                         .getId());
             pollOption.setVotedCount(pollOption.getVotedCount() - 1);
             pollOptionRepository.save(pollOption);
         }
 
 
-            PollOption pollOption = pollOptionRepository.getById(optionId);
-            pollOption.setVotedCount(pollOption.getVotedCount() + 1);
-            pollOptionRepository.save(pollOption);
+        PollOption pollOption = pollOptionRepository.getById(optionId);
+        pollOption.setVotedCount(pollOption.getVotedCount() + 1);
+        pollOptionRepository.save(pollOption);
 
-            vote.setPoll(pollRepository.getById(pollId));
-            vote.setPollOption(pollOption);
-            vote.setUser(userRepository.getById(userId));
-            voteRepository.save(vote);
+        vote.setPoll(pollRepository.getById(pollId));
+        vote.setPollOption(pollOption);
+        vote.setUser(userRepository.getById(userId));
+        voteRepository.save(vote);
 
     }
 
     private void validateVoting(Long pollId) {
-
-        if( LocalDateTime.now()
-                .isAfter(LocalDateTime.of(pollRepository.getById(pollId).getDate(), LocalTime.of(11,0)))
-        ){
+        LocalDateTime of = LocalDateTime.of(pollRepository.getById(pollId).getDate(), LocalTime.of(11, 0));
+        if (LocalDateTime.now().isAfter(of)) {
             throw new RuntimeException("Voting is over");
         }
     }
