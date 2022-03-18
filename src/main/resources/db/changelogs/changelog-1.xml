@@ -80,7 +80,7 @@
             (
                 id   NUMBER GENERATED ALWAYS AS IDENTITY ( START WITH 1 INCREMENT BY 1 ) PRIMARY KEY NOT NULL,
                 name VARCHAR(255)                                                                    NOT NULL,
-                menu NUMBER,
+                menu_id NUMBER,
                 CONSTRAINT pk_restaurant PRIMARY KEY (id)
             );
 
@@ -94,26 +94,24 @@
             );
 
             ALTER TABLE RESTAURANT
-                ADD CONSTRAINT FK_RESTAURANT_ON_MENU FOREIGN KEY (menu) REFERENCES MENU (id);
+                ADD CONSTRAINT FK_RESTAURANT_ON_MENU FOREIGN KEY (menu_id) REFERENCES MENU (id);
             ALTER TABLE POLL_OPTION
                 ADD CONSTRAINT FK_POLL_OPTION_ON_RESTAURANT FOREIGN KEY (restaurant_id) REFERENCES RESTAURANT (id);
         </sql>
         <sql>
             CREATE TABLE DISH
             (
-                id            NUMBER GENERATED ALWAYS AS IDENTITY ( START WITH 1 INCREMENT BY 1 ) PRIMARY KEY NOT NULL,
-                name          VARCHAR(255)                                                                    NOT NULL,
-                price         NUMBER,
-                menu_id       NUMBER,
-                restaurant_id NUMBER                                                                          NOT null
+                id      NUMBER GENERATED ALWAYS AS IDENTITY ( START WITH 1 INCREMENT BY 1 ) PRIMARY KEY NOT NULL,
+                name    VARCHAR(255)                                                                    NOT NULL,
+                price   NUMBER,
+                menu_id NUMBER                                                                          NOT NULL
             );
 
 
             ALTER TABLE DISH
                 ADD CONSTRAINT FK_DISH_ON_MENU FOREIGN KEY (menu_id) REFERENCES MENU (id);
 
-            ALTER TABLE DISH
-                ADD CONSTRAINT FK_DISH_ON_RESTAURANT FOREIGN KEY (restaurant_id) REFERENCES RESTAURANT (id);
+
         </sql>
     </changeSet>
 

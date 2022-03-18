@@ -57,8 +57,8 @@ public class PollService {
     }
 
     @Transactional
-    public void deleteOptionToPoll(Long pollOptionId) {
-        pollOptionRepository.deleteById(pollOptionId);
+    public void deleteOptionToPoll(Long pollOptionId, Long pollId ) {
+        pollOptionRepository.deleteByIdAndPoll(pollOptionId, pollId);
     }
 
     @Transactional

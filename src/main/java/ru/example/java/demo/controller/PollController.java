@@ -3,6 +3,7 @@ package ru.example.java.demo.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.example.java.demo.dto.VoteRequest;
+import ru.example.java.demo.model.Restaurant;
 import ru.example.java.demo.model.poll.Poll;
 import ru.example.java.demo.model.poll.PollOption;
 import ru.example.java.demo.service.PollService;
@@ -29,7 +30,7 @@ public class PollController {
 
     @DeleteMapping("/polls")
     public void delete(@RequestParam Long pollId) {
-       pollService.deletePoll(pollId);
+        pollService.deletePoll(pollId);
     }
 
     @GetMapping("/polls")
@@ -42,10 +43,14 @@ public class PollController {
         return pollService.findPollById(id);
     }
 
-
     @PostMapping("/polls/{pollid}/options")
     public void addPollOption(@PathVariable Long pollid, @RequestBody PollOption option) {
         pollService.addOptionToPoll(pollid, option);
+    }
+
+    @DeleteMapping("/polls/{pollid}/options")
+    public void addPollOption(@RequestParam Long option, @RequestParam Long pollid) {
+        pollService.deleteOptionToPoll(option, pollid);
     }
 
     @PostMapping("/polls/{pollid}/vote")
@@ -53,4 +58,5 @@ public class PollController {
         voteRequest.setPollid(pollid);
         pollService.vote(voteRequest);
     }
+
 }

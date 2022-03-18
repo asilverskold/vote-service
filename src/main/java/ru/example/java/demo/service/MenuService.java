@@ -9,6 +9,8 @@ import ru.example.java.demo.repository.DishRepository;
 import ru.example.java.demo.repository.MenuRepository;
 import ru.example.java.demo.repository.RestaurantRepository;
 
+import java.util.Collection;
+
 @Service
 @RequiredArgsConstructor
 public class MenuService {
@@ -34,18 +36,15 @@ public class MenuService {
     @Transactional
     public void addDishToMenu(Long menuId, Dish dish){
        Menu menu = menuRepository.findById(menuId).orElseThrow();
-
+       if (dish.getId() != null) throw new RuntimeException("");
        dish.setMenu(menu);
-       dish.setRestaurant(menu.getRestaurant());
        dishRepository.save(dish);
     }
 
-    @Transactional
-    public void deleteDishToMenu(Long dishId, Long menuId) {
-       Dish dish = dishRepository.findByIdAndMenu(dishId,menuId).orElseThrow();
-       dish.setMenu(null);
-       dishRepository.save(dish);
+    public Collection<Menu> findAllMenus() {
+        return menuRepository.findAll();
     }
+
 
 
 

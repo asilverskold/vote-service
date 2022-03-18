@@ -1,5 +1,6 @@
 package ru.example.java.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +20,8 @@ public class Restaurant {
     @Column(name = "name", nullable = false)
     private String name;
     @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false, name = "menu_id")
+    @JsonIgnore
     private Menu menu;
 
 
