@@ -19,10 +19,8 @@ public class Restaurant {
     private Long id;
     @Column(name = "name", nullable = false)
     private String name;
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false, name = "menu_id")
-    @JsonIgnore
-    private Menu menu;
+
+
 
 
 

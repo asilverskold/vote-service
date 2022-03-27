@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Setter
@@ -19,6 +20,10 @@ public class Menu {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+
+    @Column(name = "date", unique = true)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private LocalDate date;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, name = "restaurant_id")

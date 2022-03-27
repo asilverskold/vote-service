@@ -1,11 +1,14 @@
-package ru.example.java.demo.model.poll;
+package ru.example.java.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.example.java.demo.model.Restaurant;
 import ru.example.java.demo.model.user.User;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -18,13 +21,13 @@ public class Vote {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false, name = "poll_id")
-    private Poll poll;
+    @Column(name = "date")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private LocalDate date = LocalDate.now();
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false, name = "poll_option_id")
-    private PollOption pollOption;
+    @JoinColumn(nullable = false, name = "restaurant_id")
+    private Restaurant restaurant;
 
     @ManyToOne(optional = false,fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, name = "user_id")

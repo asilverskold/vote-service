@@ -46,9 +46,8 @@ public class MenuService {
     }
 
 
+    public Menu findById(Long id) {
 
-
-
-
-
+       return menuRepository.findById(id).orElseThrow();
+    }
 }

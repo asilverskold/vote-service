@@ -26,40 +26,6 @@
 
     </changeSet>
 
-    <changeSet author="vasily" id="changeset2">
-        <sql>
-            CREATE TABLE POLL
-            (
-                id    number generated always as identity ( start with 1 increment by 1 ) primary key,
-                date  timestamp not null,
-                title varchar(512)
-            );
-        </sql>
-
-        <sql>
-            CREATE TABLE POLL_OPTION
-            (
-                id            number generated always as identity ( start with 1 increment by 1 ) primary key,
-                restaurant_id number NOT NULL,
-                poll_id       number NOT NULL,
-                voted_count   number default 0,
-                constraint fk_poll_option_poll_id foreign key (poll_id) references POLL (id)
-            );
-        </sql>
-        <sql>
-            CREATE TABLE VOTE
-            (
-                id             number generated always as identity ( start with 1 increment by 1 ) primary key,
-                poll_id        number,
-                user_id        number,
-                poll_option_id number,
-                constraint fk_vote_poll_id foreign key (poll_id) references POLL (id),
-                constraint fk_vote_poll_option_id foreign key (poll_option_id) references POLL_OPTION (id),
-                constraint fk_vote_user_id foreign key (user_id) references USER (id)
-            );
-        </sql>
-    </changeSet>
-
     <changeSet author="vasily" id="changeset3">
         <sql>
             INSERT INTO USER(id, username, password, active)
@@ -89,14 +55,14 @@
             CREATE TABLE MENU
             (
                 id            NUMBER GENERATED ALWAYS AS IDENTITY ( START WITH 1 INCREMENT BY 1 ) PRIMARY KEY NOT NULL,
+                date          date,
                 restaurant_id NUMBER                                                                          NOT NULL,
                 CONSTRAINT FK_MENU_ON_RESTAURANT FOREIGN KEY (restaurant_id) REFERENCES RESTAURANT (id)
             );
 
             ALTER TABLE RESTAURANT
                 ADD CONSTRAINT FK_RESTAURANT_ON_MENU FOREIGN KEY (menu_id) REFERENCES MENU (id);
-            ALTER TABLE POLL_OPTION
-                ADD CONSTRAINT FK_POLL_OPTION_ON_RESTAURANT FOREIGN KEY (restaurant_id) REFERENCES RESTAURANT (id);
+
         </sql>
         <sql>
             CREATE TABLE DISH
@@ -112,6 +78,23 @@
                 ADD CONSTRAINT FK_DISH_ON_MENU FOREIGN KEY (menu_id) REFERENCES MENU (id);
 
 
+        </sql>
+
+        <sql>
+            CREATE TABLE VOTE
+            (
+                id            number generated always as identity ( start with 1 increment by 1 ) primary key,
+                date          date,
+                restaurant_id NUMBER                NOT NULL,
+                user_id       NUMBER                NOT NULL
+
+            );
+
+            ALTER TABLE vote
+                ADD CONSTRAINT FK_VOTE_ON_RESTAURANT FOREIGN KEY (restaurant_id) REFERENCES restaurant (id);
+
+            ALTER TABLE vote
+                ADD CONSTRAINT FK_VOTE_ON_USER FOREIGN KEY (user_id) REFERENCES USER (id);
         </sql>
     </changeSet>
 

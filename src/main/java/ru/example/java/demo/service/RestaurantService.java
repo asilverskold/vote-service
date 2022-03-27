@@ -3,12 +3,16 @@ package ru.example.java.demo.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.example.java.demo.dto.VoteRequest;
 import ru.example.java.demo.model.Menu;
 import ru.example.java.demo.model.Restaurant;
-import ru.example.java.demo.repository.DishRepository;
-import ru.example.java.demo.repository.MenuRepository;
-import ru.example.java.demo.repository.RestaurantRepository;
+import ru.example.java.demo.model.Vote;
+import ru.example.java.demo.repository.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 
 @Service
@@ -16,39 +20,43 @@ import java.util.Collection;
 public class RestaurantService {
     private final RestaurantRepository restaurantRepository;
     private final MenuRepository menuRepository;
-    private final DishRepository dishRepository;
+
+
 
     @Transactional
-    public Restaurant createRestaurant(Restaurant restaurant){
+    public Restaurant create(Restaurant restaurant){
         return restaurantRepository.save(restaurant);
     }
 
     @Transactional
-    public Restaurant updateRestaurant(Restaurant restaurant){
+    public Restaurant update(Restaurant restaurant){
         return restaurantRepository.save(restaurant);
     }
 
     @Transactional
-    public void deleteRestaurant(Long restaurantId){
+    public void delete(Long restaurantId){
         restaurantRepository.deleteById(restaurantId);
     }
 
-    public Collection<Restaurant> findAllRestaurant(){
+    public Collection<Restaurant> findAll(){
        return restaurantRepository.findAll();
     }
 
-    public Restaurant findRestaurantById(Long restaurantId){
+    public Restaurant findById(Long restaurantId){
        return restaurantRepository.findById(restaurantId)
                .orElseThrow();
     }
 
+
     @Transactional
-    public void setMenuDayToRestaurant(Menu menu, Long restaurantId){
-        Restaurant restaurant = this.findRestaurantById(restaurantId);
-        if(menu.getRestaurant()!= null){throw new RuntimeException("");}
-        restaurant.setMenu(menu);
-        this.updateRestaurant(restaurant);
+    public void addMenuToRestaurant(Long restaurantId, Menu menu) {
+        menu.setRestaurant(restaurantRepository.getById(restaurantId));
+        menuRepository.save(menu);
     }
+
+
+
+
 
 
 }
