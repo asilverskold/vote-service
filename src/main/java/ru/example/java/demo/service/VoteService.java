@@ -25,7 +25,7 @@ public class VoteService {
     public Restaurant getResult(LocalDate date) {
         Long restauranId = voteRepository.findVotesByDateEquals(date)
                 .stream()
-                .collect(Collectors.groupingBy(Vote::getId, Collectors.counting()))
+                .collect(Collectors.groupingBy(e -> e.getRestaurant().getId(), Collectors.counting()))
                 .entrySet()
                 .stream()
                 .max((e1, e2) -> e1.getValue() > e2.getValue() ? 1 : -1)
