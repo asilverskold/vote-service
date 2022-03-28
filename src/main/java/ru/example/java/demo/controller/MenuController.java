@@ -13,24 +13,25 @@ import java.util.Collection;
 public class MenuController {
     public final MenuService menuService;
 
-    @PostMapping()
-    public Menu create(@RequestBody Menu menu) {
-        return menuService.createMenu(menu);
+    @PostMapping("{restaurantId}")
+    public Menu create(@PathVariable Long restaurantId, @RequestBody Menu menu) {
+
+        return menuService.create(restaurantId, menu);
     }
 
     @PutMapping()
     public Menu update(@RequestBody Menu menu){
-        return menuService.updateMenu(menu);
+        return menuService.update(menu);
     }
 
     @DeleteMapping()
     public void delete(@RequestParam Long menuId) {
-        menuService.deleteMenu(menuId);
+        menuService.delete(menuId);
     }
 
     @GetMapping()
     public Collection<Menu> findAll() {
-        return menuService.findAllMenus();
+        return menuService.findAll();
     }
 
     @GetMapping("{id}")

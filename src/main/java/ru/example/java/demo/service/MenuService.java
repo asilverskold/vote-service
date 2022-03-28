@@ -19,29 +19,31 @@ public class MenuService {
     private final DishRepository dishRepository;
 
     @Transactional
-    public Menu createMenu(Menu menu){
+    public Menu create(Long restaurantId, Menu menu){
+        menu.setRestaurant(restaurantRepository.getById(restaurantId));
+        menuRepository.save(menu);
         return menuRepository.save(menu);
     }
 
     @Transactional
-    public Menu updateMenu(Menu menu){
+    public Menu update(Menu menu){
         return menuRepository.save(menu);
     }
 
     @Transactional
-    public void deleteMenu(Long menuId){
+    public void delete(Long menuId){
         menuRepository.deleteById(menuId);
     }
 
     @Transactional
     public void addDishToMenu(Long menuId, Dish dish){
-       Menu menu = menuRepository.findById(menuId).orElseThrow();
+      // Menu menu = menuRepository.findById(menuId).orElseThrow();
        if (dish.getId() != null) throw new RuntimeException("");
-       dish.setMenu(menu);
+       dish.setMenu(menuRepository.getById(menuId));
        dishRepository.save(dish);
     }
 
-    public Collection<Menu> findAllMenus() {
+    public Collection<Menu> findAll() {
         return menuRepository.findAll();
     }
 
@@ -50,4 +52,5 @@ public class MenuService {
 
        return menuRepository.findById(id).orElseThrow();
     }
+
 }

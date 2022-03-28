@@ -40,22 +40,12 @@ public class RestaurantController {
     }
 
     @GetMapping("{id}")
-    public Restaurant findById(@PathVariable Long restaurantId) {
-        return restaurantService.findById(restaurantId);
+    public Restaurant findById(@PathVariable Long id) {
+        return restaurantService.findById(id);
     }
 
-    @PostMapping("{id}/menu")
-    public void addMenu(@PathVariable Long restaurantId, @RequestBody Menu menu) {
-        restaurantService.addMenuToRestaurant(restaurantId,menu);
-    }
-
-   /* @DeleteMapping("/restaurants/{id}/menu")
-    public void deleteMenu(@RequestParam Long restaurantId, @RequestParam Long menuId) {
-
-    }*/
-
-    @PostMapping("{Id}/vote")
-    public void addPollOption(@PathVariable Long id,@PathVariable Long userId) {
+    @PostMapping("{id}/vote")
+    public void vote(@PathVariable Long id,@PathVariable Long userId) {
      voteService.vote(id,userId);
     }
 

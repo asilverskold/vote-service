@@ -48,11 +48,7 @@ public class RestaurantService {
     }
 
 
-    @Transactional
-    public void addMenuToRestaurant(Long restaurantId, Menu menu) {
-        menu.setRestaurant(restaurantRepository.getById(restaurantId));
-        menuRepository.save(menu);
-    }
+
 
 
 
