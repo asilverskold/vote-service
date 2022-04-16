@@ -7,10 +7,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Data
-public class MenuDto implements Serializable {
+public class RestaurantDto implements Serializable {
     private final Long id;
-    private final LocalDate date;
-    private final List<DishDto> dishs;
-
-
+    private final String name;
+    private final MenuDto memu;
 }

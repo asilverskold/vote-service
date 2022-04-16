@@ -2,6 +2,7 @@ package ru.example.java.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,6 +18,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Entity
 @Table(name = "menu")
+@Data
 public class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,3 +1,4 @@
+/*
 package ru.example.java.demo.config;
 
 import lombok.RequiredArgsConstructor;
@@ -47,3 +48,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 }
+*/

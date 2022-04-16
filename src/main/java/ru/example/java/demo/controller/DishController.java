@@ -18,20 +18,20 @@ public class DishController {
     private final DishRepository dishRepository;
     private final MenuRepository menuRepository;
 
-    @PostMapping("{menuId}")
+    @PostMapping()
     @Transactional
-    public Dish create(@PathVariable Long menuId, @RequestBody Dish dish) {
+    public Dish create(@RequestParam Long menuId, @RequestBody Dish dish) {
         //Menu menu = menuRepository.findById(menuId).orElseThrow();
         if (dish.getId() != null) throw new RuntimeException("");
         dish.setMenu(menuRepository.getById(menuId));
         return dishRepository.save(dish);
     }
-
+    @Transactional
     @PutMapping()
     public Dish update(@RequestBody Dish dish){
         return dishRepository.save(dish);
     }
-
+    @Transactional
     @DeleteMapping()
     public void delete(@RequestParam Long dishId) {
         dishRepository.deleteById(dishId);

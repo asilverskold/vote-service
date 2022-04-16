@@ -2,13 +2,10 @@ package ru.example.java.demo.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import ru.example.java.demo.dto.VoteRequest;
-import ru.example.java.demo.model.Menu;
 import ru.example.java.demo.model.Restaurant;
 import ru.example.java.demo.service.RestaurantService;
 import ru.example.java.demo.service.VoteService;
 
-import javax.validation.Valid;
 import java.util.Collection;
 
 @RestController
