@@ -9,8 +9,8 @@ import ru.example.java.demo.repository.DishRepository;
 import ru.example.java.demo.repository.MenuRepository;
 import ru.example.java.demo.repository.RestaurantRepository;
 
+import java.time.LocalDate;
 import java.util.Collection;
-
 @Service
 @RequiredArgsConstructor
 public class MenuService {
@@ -19,28 +19,21 @@ public class MenuService {
     private final DishRepository dishRepository;
 
     @Transactional
-    public Menu create(Long restaurantId, Menu menu){
+    public Menu create(Long restaurantId, Menu menu) {
         menu.setRestaurant(restaurantRepository.getById(restaurantId));
-        menuRepository.save(menu);
+        menu.getDishs().forEach(e -> e.setMenu(menu));
         return menuRepository.save(menu);
     }
 
     @Transactional
-    public Menu update(Menu menu){
+    public Menu update(Menu menu) {
+        menu.getDishs().forEach(e -> e.setMenu(menu));
         return menuRepository.save(menu);
     }
 
     @Transactional
-    public void delete(Long menuId){
+    public void delete(Long menuId) {
         menuRepository.deleteById(menuId);
-    }
-
-    @Transactional
-    public void addDishToMenu(Long menuId, Dish dish){
-      // Menu menu = menuRepository.findById(menuId).orElseThrow();
-       if (dish.getId() != null) throw new RuntimeException("");
-       dish.setMenu(menuRepository.getById(menuId));
-       dishRepository.save(dish);
     }
 
     public Collection<Menu> findAll() {
@@ -50,7 +43,11 @@ public class MenuService {
 
     public Menu findById(Long id) {
 
-       return menuRepository.findById(id).orElseThrow();
+        return menuRepository.findById(id).orElseThrow();
+    }
+
+    public Menu findByRestaurantIdAndDate(Long restaurantId, LocalDate date) {
+        return menuRepository.findByRestaurantIdAndDate(restaurantId, date).orElseThrow(()-> new RuntimeException("null") );
     }
 
 }

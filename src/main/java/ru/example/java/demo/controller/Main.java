@@ -63,20 +63,6 @@ class Main {
 
 
 
-
-/*
-
-        String json = "{\"id\":670469356,\"tempId\":675007842,\"storage\":\"live\",\"uuid\":\"ae578e0c-b0ec-48e1-8af2-27b86d871152\",\"url\":\"/a/show/675007842\",\"title\":\"4-комнатная квартира, 82 м², 7/10 этаж\",\"titleWithPrice\":\"4-комнатная квартира, 82 м², 7/10 этаж за 30&nbsp;млн&nbsp;<span class=\\\"currency-sign offer__currency\\\">〒</span>\",\"address\":\"Достоевского 186\",\"fullAddress\":\"Семей, Достоевского 186\",\"price\":\"30&nbsp;000&nbsp;000&nbsp;<span class=\\\"currency-sign offer__currency\\\">〒</span>\",\"priceM2\":365853,\"priceM2Text\":null,\"daysInLive\":5,\"description\":\"кирпичный дом, 1993 г.п., состояние: хорошее, потолки 2.7м., санузел совмещенный, телефон: отдельный, интернет ADSL, частично меблирована, Продается 4-комнатная квартира новой планировки в кирпичном доме 1993 года район стадиона Спартак. Развитая инфраструктура. Рядом расположены: школа № 17 школа…\",\"color\":\"green\",\"isFlatLayout\":false,\"isHouseLayout\":false,\"isLayout\":false,\"category\":{\"id\":1,\"name\":\"sell.flat\",\"label\":\"Продажа квартир\",\"isDisabled\":false},\"owner\":{\"isPro\":true,\"isComplex\":false,\"isBuilder\":false,\"isOwner\":false,\"title\":\"Осинцев Валентин, компания «ТОО ЭТАЖИ СЕМЕЙ»\",\"label\":{\"title\":\"Специалист\",\"name\":\"identified-specialist\",\"color\":\"transparent\"},\"isChecked\":false,\"isCurrentUser\":false}}";
-
-        Cart cart = getCart(json);
-        log.info(cart.toString());
-*/
-
-
-
-
-
-
     }
 
     private static void write(List<String> carts,String file) throws IOException {
@@ -113,7 +99,7 @@ class Main {
     public static String getPhones(Integer id) throws UnirestException, JsonProcessingException {
 
         try {
-            Thread.sleep(5000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

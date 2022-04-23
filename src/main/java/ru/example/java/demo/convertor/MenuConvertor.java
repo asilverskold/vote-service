@@ -1,5 +1,6 @@
 package ru.example.java.demo.convertor;
 
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
 import org.modelmapper.convention.MatchingStrategies;
@@ -12,6 +13,7 @@ import ru.example.java.demo.model.Dish;
 import ru.example.java.demo.model.Menu;
 
 @Component
+@RequiredArgsConstructor
 public class MenuConvertor {
     private final ModelMapper modelMapper;
 
