@@ -1,9 +1,12 @@
 package ru.example.java.demo.controller;
 
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import ru.example.java.demo.model.AuthenticatedUser;
 import ru.example.java.demo.model.Restaurant;
 import ru.example.java.demo.model.user.User;
 import ru.example.java.demo.repository.UserRepository;
@@ -25,11 +28,10 @@ public class VoteController {
         return voteService.getResult(LocalDate.now());
     }
     @PostMapping("vote/")
-    public void vote(@RequestParam Long restaurantId, @AuthenticationPrincipal UserDetails user) {
-
-
-        System.out.println(user.getUsername());
-        voteService.vote(restaurantId,userRepository.findByUsername(user.getUsername()).get().getId());
+    public void vote(@RequestParam Long restaurantId,
+                     @Parameter(hidden = true) @AuthenticationPrincipal AuthenticatedUser authenticatedUser) {
+        System.out.println(authenticatedUser);
+        voteService.vote(restaurantId,authenticatedUser.getUser().getId());
     }
 
 
