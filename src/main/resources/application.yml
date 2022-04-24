@@ -7,6 +7,8 @@ spring:
     driverClassName: org.h2.Driver
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+
   liquibase:
     change-log: classpath:db/changeLog.xml
     enabled: true

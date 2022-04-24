@@ -16,8 +16,6 @@ import java.util.Collection;
 public class MenuService {
     private final MenuRepository menuRepository;
     private final RestaurantRepository restaurantRepository;
-    private final DishRepository dishRepository;
-
     @Transactional
     public Menu create(Long restaurantId, Menu menu) {
         menu.setRestaurant(restaurantRepository.getById(restaurantId));

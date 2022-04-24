@@ -1,18 +1,14 @@
 package ru.example.java.demo.controller;
 
-import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-import ru.example.java.demo.model.AuthenticatedUser;
+import ru.example.java.demo.controller.convertor.RestaurantModelAssembler;
+import ru.example.java.demo.model.user.AuthenticatedUser;
 import ru.example.java.demo.model.Restaurant;
-import ru.example.java.demo.model.user.User;
-import ru.example.java.demo.repository.UserRepository;
 import ru.example.java.demo.service.VoteService;
-
-import java.security.Principal;
 import java.time.LocalDate;
 
 @RestController
@@ -20,12 +16,11 @@ import java.time.LocalDate;
 @RequestMapping("/api/")
 public class VoteController {
     private final VoteService voteService;
-    private final UserRepository userRepository;
+    private final RestaurantModelAssembler assembler;
 
     @GetMapping("result")
-    public Restaurant getResult() {
-
-        return voteService.getResult(LocalDate.now());
+    public EntityModel<Restaurant> getResult() {
+        return assembler.toModel(voteService.getResult(LocalDate.now()));
     }
     @PostMapping("vote/")
     public void vote(@RequestParam Long restaurantId,

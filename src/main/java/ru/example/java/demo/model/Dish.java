@@ -1,14 +1,14 @@
 package ru.example.java.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Setter
 @Getter
+@ToString
+@EqualsAndHashCode
 @NoArgsConstructor
 @Entity
 @Table(name = "dish")
@@ -27,6 +27,7 @@ public class Dish {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "menu_id",nullable = false)
     @JsonIgnore
+    @EqualsAndHashCode.Exclude
     private Menu menu;
 
 }

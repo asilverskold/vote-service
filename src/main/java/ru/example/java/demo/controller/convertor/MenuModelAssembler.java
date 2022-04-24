@@ -1,4 +1,4 @@
-package ru.example.java.demo.convertor;
+package ru.example.java.demo.controller.convertor;
 
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;

@@ -43,11 +43,13 @@ public class VoteService {
                 .orElse(new Vote());
         if (vote.getId() != null) {
             if (vote.getRestaurant().getId().equals(restaurantId)) {
-                throw new RuntimeException("Already voted");
+                voteRepository.delete(vote);
+                return;
+               // throw new RuntimeException("Already voted");
             }
         }
 
-        vote.setRestaurant(restaurantRepository.getById(restaurantId));
+        vote.setRestaurant(restaurantRepository.findById(restaurantId).orElseThrow(()-> new RuntimeException("No restaurant " + restaurantId)));
         vote.setUser(userRepository.getById(userId));
         voteRepository.save(vote);
 

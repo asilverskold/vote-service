@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -19,8 +20,14 @@ public class Restaurant {
     private Long id;
     @Column(name = "name", nullable = false)
     private String name;
-
-
+    @JsonIgnore
+    @Transient
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Vote> votes;
+    @JsonIgnore
+    @Transient
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Menu> menus;
 
 
 

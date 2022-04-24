@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final DataSource dataSource;
+
 
     private final UserService userService;
 
@@ -44,10 +44,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
       auth.userDetailsService(userService)
               .passwordEncoder(NoOpPasswordEncoder.getInstance());
-//              .jdbcAuthentication()
-//              .dataSource(dataSource)
-//              .usersByUsernameQuery("select username, password, active from user where username=?")
-//              .authoritiesByUsernameQuery("select u.username, ur.role from user u inner join user_role ur on u.id = ur.user_id where u.username=?");
 
     }
 

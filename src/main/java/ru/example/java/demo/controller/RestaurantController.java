@@ -1,11 +1,9 @@
 package ru.example.java.demo.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.el.stream.Optional;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.example.java.demo.convertor.RestaurantModelAssembler;
+import ru.example.java.demo.controller.convertor.RestaurantModelAssembler;
 import ru.example.java.demo.model.Menu;
 import ru.example.java.demo.model.Restaurant;
 import ru.example.java.demo.service.RestaurantService;
@@ -16,7 +14,6 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequiredArgsConstructor
@@ -59,11 +56,6 @@ public class RestaurantController {
     @GetMapping("{id}/menu")
     public Menu getMenu(@PathVariable Long id, @RequestParam LocalDate date) {
         return restaurantService.findMenuByRestaurantIdAndDate(id, date);
-    }
-
-    @PostMapping("{id}/vote")
-    public void vote(@PathVariable Long id,@PathVariable Long userId) {
-     voteService.vote(id,userId);
     }
 
 }

@@ -6,12 +6,10 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.example.java.demo.model.user.Role;
-
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
+
+import java.util.Set;
 
 @Setter
 @Getter
@@ -37,7 +35,7 @@ public class Menu {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "menu", cascade = CascadeType.ALL, orphanRemoval = true)
     //@JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "dish")
-    private List<Dish> dishs;
+    private Set<Dish> dishs;
 
 
 

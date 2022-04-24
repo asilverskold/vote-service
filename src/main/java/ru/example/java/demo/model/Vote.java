@@ -25,7 +25,7 @@ public class Vote {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDate date = LocalDate.now();
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false,fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "restaurant_id")
     private Restaurant restaurant;
 
