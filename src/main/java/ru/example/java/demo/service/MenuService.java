@@ -1,6 +1,7 @@
 package ru.example.java.demo.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.example.java.demo.model.Dish;
@@ -16,6 +17,8 @@ import java.util.Collection;
 public class MenuService {
     private final MenuRepository menuRepository;
     private final RestaurantRepository restaurantRepository;
+
+
     @Transactional
     public Menu create(Long restaurantId, Menu menu) {
         menu.setRestaurant(restaurantRepository.getById(restaurantId));

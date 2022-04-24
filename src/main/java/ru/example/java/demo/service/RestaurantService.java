@@ -1,6 +1,7 @@
 package ru.example.java.demo.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.example.java.demo.model.Menu;
