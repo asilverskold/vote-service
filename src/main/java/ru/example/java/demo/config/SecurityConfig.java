@@ -9,12 +9,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.example.java.demo.repository.UserRepository;
 import ru.example.java.demo.service.UserService;
 
-import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
@@ -43,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
       auth.userDetailsService(userService)
-              .passwordEncoder(NoOpPasswordEncoder.getInstance());
+              .passwordEncoder(passwordEncoder());//NoOpPasswordEncoder.getInstance()
 
     }
 

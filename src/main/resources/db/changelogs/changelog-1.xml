@@ -29,7 +29,7 @@
     <changeSet author="vasily" id="changeset3">
         <sql>
             INSERT INTO USER(id, username, password, active)
-            VALUES (1, 'admin', 'admin', 1)
+            VALUES (1, 'admin', '$2a$10$doPLQmm1GsDDS27YrAfXleTd02dWyg5WmtJiTMOi.O5/G7I2aJXJK', 1)
 
         </sql>
         <sql>
