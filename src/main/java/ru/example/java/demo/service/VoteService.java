@@ -37,7 +37,7 @@ public class VoteService {
 
     @Transactional
     public void vote(Long restaurantId, Long userId) {
-       // checkTheVotingTime();
+        checkTheVotingTime();
 
         Vote vote = voteRepository.findByVote(LocalDate.now(), userId)
                 .orElse(new Vote());
