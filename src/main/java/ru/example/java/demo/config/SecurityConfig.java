@@ -1,4 +1,4 @@
-/*
+
 package ru.example.java.demo.config;
 
 import lombok.RequiredArgsConstructor;
@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import ru.example.java.demo.repository.UserRepository;
 
 import javax.sql.DataSource;
 
@@ -48,4 +49,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 }
-*/
+

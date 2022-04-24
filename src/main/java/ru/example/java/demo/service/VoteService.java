@@ -23,21 +23,21 @@ public class VoteService {
 
     @Transactional
     public Restaurant getResult(LocalDate date) {
-        Long restauranId = voteRepository.findVotesByDateEquals(date)
+        Long restaurantId = voteRepository.findVotesByDateEquals(date)
                 .stream()
                 .collect(Collectors.groupingBy(e -> e.getRestaurant().getId(), Collectors.counting()))
                 .entrySet()
                 .stream()
                 .max((e1, e2) -> e1.getValue() > e2.getValue() ? 1 : -1)
-                .get()
+                .orElseThrow(()-> new RuntimeException("No votes"))
                 .getKey();
 
-        return restaurantRepository.findById(restauranId).orElseThrow();
+        return restaurantRepository.findById(restaurantId).orElseThrow();
     }
 
     @Transactional
     public void vote(Long restaurantId, Long userId) {
-        checkTheVotingTime();
+       // checkTheVotingTime();
 
         Vote vote = voteRepository.findByVote(LocalDate.now(), userId)
                 .orElse(new Vote());
