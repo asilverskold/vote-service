@@ -7,7 +7,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import ru.example.java.demo.controller.convertor.RestaurantModelAssembler;
-import ru.example.java.demo.model.user.AuthenticatedUser;
+import ru.example.java.demo.AuthenticatedUser;
 import ru.example.java.demo.model.Restaurant;
 import ru.example.java.demo.service.VoteService;
 import java.time.LocalDate;

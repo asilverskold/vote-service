@@ -1,6 +1,7 @@
 package ru.example.java.demo.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.example.java.demo.model.Restaurant;
@@ -8,6 +9,7 @@ import ru.example.java.demo.model.Vote;
 import ru.example.java.demo.repository.RestaurantRepository;
 import ru.example.java.demo.repository.UserRepository;
 import ru.example.java.demo.repository.VoteRepository;
+import ru.example.java.demo.service.exception.MyException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -29,7 +31,7 @@ public class VoteService {
                 .entrySet()
                 .stream()
                 .max((e1, e2) -> e1.getValue() > e2.getValue() ? 1 : -1)
-                .orElseThrow(()-> new RuntimeException("No votes"))
+                .orElseThrow(()-> new MyException("No votes"))
                 .getKey();
 
         return restaurantRepository.findById(restaurantId).orElseThrow();
@@ -45,11 +47,11 @@ public class VoteService {
             if (vote.getRestaurant().getId().equals(restaurantId)) {
                 voteRepository.delete(vote);
                 return;
-               // throw new RuntimeException("Already voted");
+               // throw new MyException("Already voted");
             }
         }
 
-        vote.setRestaurant(restaurantRepository.findById(restaurantId).orElseThrow(()-> new RuntimeException("No restaurant " + restaurantId)));
+        vote.setRestaurant(restaurantRepository.findById(restaurantId).orElseThrow(()-> new MyException("No restaurant " + restaurantId,HttpStatus.BAD_REQUEST)));
         vote.setUser(userRepository.getById(userId));
         voteRepository.save(vote);
 
@@ -59,7 +61,7 @@ public class VoteService {
         LocalDateTime of = LocalDateTime.of(LocalDate.now(), LocalTime.of(11, 0));
 
         if (LocalDateTime.now().isAfter(of)) {
-            throw new RuntimeException("Voting is over");
+            throw new MyException("Voting is over", HttpStatus.OK);
         }
     }
 

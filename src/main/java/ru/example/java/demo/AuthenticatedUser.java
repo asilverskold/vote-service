@@ -1,4 +1,4 @@
-package ru.example.java.demo.model.user;
+package ru.example.java.demo;
 
 import lombok.Getter;
 import lombok.ToString;

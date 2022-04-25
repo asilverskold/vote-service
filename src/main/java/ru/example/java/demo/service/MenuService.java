@@ -1,6 +1,7 @@
 package ru.example.java.demo.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,6 +10,7 @@ import ru.example.java.demo.model.Menu;
 import ru.example.java.demo.repository.DishRepository;
 import ru.example.java.demo.repository.MenuRepository;
 import ru.example.java.demo.repository.RestaurantRepository;
+import ru.example.java.demo.service.exception.MyException;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -44,11 +46,11 @@ public class MenuService {
 
     public Menu findById(Long id) {
 
-        return menuRepository.findById(id).orElseThrow();
+        return menuRepository.findById(id).orElseThrow(()-> new MyException("Menu not found"+ id, HttpStatus.BAD_REQUEST));
     }
 
     public Menu findByRestaurantIdAndDate(Long restaurantId, LocalDate date) {
-        return menuRepository.findByRestaurantIdAndDate(restaurantId, date).orElseThrow(()-> new RuntimeException("null") );
+        return menuRepository.findByRestaurantIdAndDate(restaurantId, date).orElseThrow(()-> new MyException("Menu not found"+ date,HttpStatus.BAD_REQUEST) );
     }
 
 }

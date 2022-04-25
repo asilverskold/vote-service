@@ -34,7 +34,9 @@
         </sql>
         <sql>
             INSERT INTO USER_ROLE(user_id, role)
-            VALUES (1, 'USER')
+            VALUES (1, 'USER');
+            INSERT INTO USER_ROLE(user_id, role)
+            VALUES (1, 'ADMIN');
 
         </sql>
 

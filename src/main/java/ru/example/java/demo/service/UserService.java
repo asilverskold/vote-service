@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.example.java.demo.model.user.AuthenticatedUser;
+import ru.example.java.demo.AuthenticatedUser;
 import ru.example.java.demo.model.user.Role;
 import ru.example.java.demo.model.user.User;
 import ru.example.java.demo.repository.UserRepository;
