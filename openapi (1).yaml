@@ -1,0 +1,315 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
+paths:
+  /api/restaurants/:
+    get:
+      tags:
+        - restaurant-controller
+      operationId: all
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EntityModelRestaurant'
+    put:
+      tags:
+        - restaurant-controller
+      operationId: update
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Restaurant'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/EntityModelRestaurant'
+    post:
+      tags:
+        - restaurant-controller
+      operationId: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Restaurant'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/EntityModelRestaurant'
+    delete:
+      tags:
+        - restaurant-controller
+      operationId: delete
+      parameters:
+        - name: restaurantId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+  /api/menus/:
+    get:
+      tags:
+        - menu-controller
+      operationId: all_1
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EntityModelMenu'
+    put:
+      tags:
+        - menu-controller
+      operationId: update_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Menu'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/EntityModelMenu'
+    post:
+      tags:
+        - menu-controller
+      operationId: create_1
+      parameters:
+        - name: restaurantId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Menu'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/EntityModelMenu'
+    delete:
+      tags:
+        - menu-controller
+      operationId: delete_1
+      parameters:
+        - name: menuId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+  /api/vote/:
+    post:
+      tags:
+        - vote-controller
+      operationId: vote
+      parameters:
+        - name: restaurantId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+  /api/result:
+    get:
+      tags:
+        - vote-controller
+      operationId: getResult
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/EntityModelRestaurant'
+  /api/restaurants/{id}:
+    get:
+      tags:
+        - restaurant-controller
+      operationId: one
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/EntityModelRestaurant'
+  /api/restaurants/{id}/menu:
+    get:
+      tags:
+        - restaurant-controller
+      operationId: getMenu
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Menu'
+  /api/menus/{id}:
+    get:
+      tags:
+        - menu-controller
+      operationId: one_1
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/EntityModelMenu'
+components:
+  schemas:
+    Restaurant:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+    EntityModelRestaurant:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+    Link:
+      type: object
+      properties:
+        rel:
+          type: string
+        href:
+          type: string
+        hreflang:
+          type: string
+        media:
+          type: string
+        title:
+          type: string
+        type:
+          type: string
+        deprecation:
+          type: string
+        profile:
+          type: string
+        name:
+          type: string
+    Dish:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        price:
+          type: integer
+          format: int64
+    Menu:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        date:
+          type: string
+          format: date
+        dishs:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Dish'
+    EntityModelMenu:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        date:
+          type: string
+          format: date
+        dishs:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Dish'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
