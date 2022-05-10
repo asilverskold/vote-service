@@ -14,6 +14,9 @@ import ru.example.java.demo.service.exception.MyException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,16 +28,26 @@ public class VoteService {
 
     @Transactional
     public Restaurant getResult(LocalDate date) {
-        Long restaurantId = voteRepository.findVotesByDateEquals(date)
+       /* Long restaurantId = voteRepository.findVotesByDateEquals(date)
                 .stream()
+                .peek(e-> System.out.println(e.getDate().toString()))
                 .collect(Collectors.groupingBy(e -> e.getRestaurant().getId(), Collectors.counting()))
                 .entrySet()
                 .stream()
                 .max((e1, e2) -> e1.getValue() > e2.getValue() ? 1 : -1)
                 .orElseThrow(()-> new MyException("No votes"))
                 .getKey();
+        */
+        return (Restaurant) restaurantRepository.findByR(date)
+                .stream()
+                .map(e -> (Object[]) e)
+                .map(e -> new Object(){Restaurant r = (Restaurant)e[0];
+                                        Long q =(Long) e[1];})
+                .max((e, e1) -> e.q > e1.q ? 1 : -1)
+                .orElseThrow(() -> new MyException("No votes"))
+                .r;
 
-        return restaurantRepository.findById(restaurantId).orElseThrow();
+        //restaurantRepository.findByR(date).stream().peek(e -> {e.keySet().stream().forEach(i-> System.out.println(i));}).findFirst().get().keySet().stream().findFirst().get(); //restaurantRepository.findById(restaurantId).orElseThrow();
     }
 
     @Transactional
@@ -47,11 +60,11 @@ public class VoteService {
             if (vote.getRestaurant().getId().equals(restaurantId)) {
                 voteRepository.delete(vote);
                 return;
-               // throw new MyException("Already voted");
+                // throw new MyException("Already voted");
             }
         }
 
-        vote.setRestaurant(restaurantRepository.findById(restaurantId).orElseThrow(()-> new MyException("No restaurant " + restaurantId,HttpStatus.BAD_REQUEST)));
+        vote.setRestaurant(restaurantRepository.findById(restaurantId).orElseThrow(() -> new MyException("No restaurant " + restaurantId, HttpStatus.BAD_REQUEST)));
         vote.setUser(userRepository.getById(userId));
         voteRepository.save(vote);
 

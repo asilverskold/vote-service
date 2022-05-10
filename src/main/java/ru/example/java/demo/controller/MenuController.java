@@ -22,6 +22,7 @@ public class MenuController {
     @Secured("ROLE_ADMIN")
     @PostMapping()
     public EntityModel<Menu> create(@RequestParam Long restaurantId, @RequestBody Menu menu) {
+
         return assembler.toModel(menuService.create(restaurantId, menu));
     }
 
@@ -46,6 +47,8 @@ public class MenuController {
                 .map(assembler::toModel)
                 .collect(Collectors.toList());
     }
+
+
     @Secured("ROLE_USER")
     @GetMapping("{id}")
     public EntityModel<Menu> one(@PathVariable Long id) {

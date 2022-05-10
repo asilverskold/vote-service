@@ -24,8 +24,7 @@ public class Menu {
     private Long id;
 
     @Column(name = "date", unique = true)
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private LocalDate date = LocalDate.now();
+    private LocalDate date;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, name = "restaurant_id")

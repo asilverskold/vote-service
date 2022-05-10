@@ -23,6 +23,7 @@ public class MenuService {
 
     @Transactional
     public Menu create(Long restaurantId, Menu menu) {
+
         menu.setRestaurant(restaurantRepository.getById(restaurantId));
         menu.getDishs().forEach(e -> e.setMenu(menu));
         return menuRepository.save(menu);
